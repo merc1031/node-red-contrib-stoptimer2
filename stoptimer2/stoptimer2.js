@@ -16,11 +16,12 @@
 
 module.exports = function(RED) {
 	"use strict";
-	function StopTimer(n) {
+	function StopTimer2(n) {
 		RED.nodes.createNode(this,n);
 
 		this.units = n.units || "Second";
-		this.duration = n.duration || 5;
+		this.durationType = n.durationType;
+		this.duration = parseInt(RED.util.evaluateNodeProperty(n.duration, this.durationType, this, null), 10) || 5;
 		this.payloadval = n.payloadval || "0";
     this.payloadtype = n.payloadtype || "num";
 
@@ -82,5 +83,5 @@ module.exports = function(RED) {
 			node.status({});
 		});
 	}
-	RED.nodes.registerType("stoptimer",StopTimer);
+	RED.nodes.registerType("stoptimer2",StopTimer2);
 }

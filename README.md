@@ -18,3 +18,5 @@ This is like the built in delay function of node-red, but with the ability to no
 0.0.6 - Forgot to update the "info" panel instructions inside of node-red to include the new features.
 
 0.0.7 - Clarified the instructions with respect to the what happens to the existing message when a new message arrives.
+
+0.1.0 - merc1031: Simple support for setting time from environment to allow parametrized use in subflows
