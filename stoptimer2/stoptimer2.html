@@ -62,17 +62,20 @@
 </script>
 
 <script type="text/x-red" data-template-name="stoptimer2">
-	<div class="form-row">
+    <div class="form-row">
         <label for="node-input-duration"><i class="fa fa-clock-o"></i> Timer</label>
         <input type="hidden" id="node-input-durationType">
-		<input type="text" id="node-input-duration" style="text-align:end; width:70px !important">
-		<select id="node-input-units" style="width:140px !important">
-			<option value="Millisecond">Milliseconds</option>
-			<option value="Second">Seconds</option>
-			<option value="Minute">Minutes</option>
-			<option value="Hour">Hours</option>
-		</select>
-	</div>
+        <input type="text" id="node-input-duration" style="text-align:end; width:270px !important">
+    </div>
+    <div class="form-row">
+        <label></label>
+        <select id="node-input-units" style="width:270px !important>
+            <option value="Millisecond">Milliseconds</option>
+            <option value="Second">Seconds</option>
+            <option value="Minute">Minutes</option>
+            <option value="Hour">Hours</option>
+        </select>
+    </div>
 	<div class="form-row">
 			<label for="node-input-payloadtype"><i class="fa fa-envelope"></i> 2nd Payload</label>
 			<input type="hidden" id="node-input-payloadtype">
