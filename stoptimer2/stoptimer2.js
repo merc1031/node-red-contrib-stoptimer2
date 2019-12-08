@@ -17,34 +17,41 @@
 module.exports = function(RED) {
     "use strict";
     function StopTimer2(n) {
-        RED.nodes.createNode(this,n);
+        RED.nodes.createNode(this, n);
 
         this.units = n.units || "Second";
         this.durationType = n.durationType;
         this.duration = parseInt(RED.util.evaluateNodeProperty(n.duration, this.durationType, this, null), 10) || 5;
         this.payloadval = n.payloadval || "0";
-    this.payloadtype = n.payloadtype || "num";
+        this.payloadtype = n.payloadtype || "num";
 
-        if (this.duration <= 0) { this.duration = 0; }
-        else {
-            if (this.units == "Second") { this.duration = this.duration * 1000; }
-            if (this.units == "Minute") { this.duration = this.duration * 1000 * 60; }
-            if (this.units == "Hour") { this.duration = this.duration * 1000 * 60 * 60; }
+        if (this.duration <= 0) {
+            this.duration = 0;
+        } else {
+            if (this.units == "Second") {
+                this.duration = this.duration * 1000;
+            }
+            if (this.units == "Minute") {
+                this.duration = this.duration * 1000 * 60;
+            }
+            if (this.units == "Hour") {
+                this.duration = this.duration * 1000 * 60 * 60;
+            }
         }
 
         if ((this.payloadtype === "num") && (!isNaN(this.payloadval))) {
             this.payloadval = Number(this.payloadval);
-    }
-    else if (this.payloadval === 'true' || this.payloadval === 'false') {
+        }
+        else if (this.payloadval === 'true' || this.payloadval === 'false') {
             this.payloadval = Boolean(this.payloadval);
-    }
-    else if (this.payloadval == "null") {
-        this.payloadtype = 'null';
-        this.payloadval = null;
-    }
-    else {
-        this.payloadval = String(this.payloadval);
-    }
+        }
+        else if (this.payloadval == "null") {
+            this.payloadtype = 'null';
+            this.payloadval = null;
+        }
+        else {
+            this.payloadval = String(this.payloadval);
+        }
 
         var node = this;
         var timeout = null;
@@ -54,25 +61,25 @@ module.exports = function(RED) {
             if(stopped === false || msg._timerpass !== true) {
                 stopped = false;
                 clearTimeout(timeout);
-        timeout = null;
+                timeout = null;
                 if (msg.payload == "stop" || msg.payload == "STOP") {
-                    node.status({fill:"red",shape:"ring",text:"stopped"});
+                    node.status({fill: "red", shape: "ring", text: "stopped"});
                     stopped = true;
                     var msg2 = RED.util.cloneMessage(msg);
                     msg2.payload = "stopped";
                     node.send([null, msg2]);
-                }else{
+                } else {
                     msg._timerpass = true;
-                    node.status({fill:"green",shape:"dot",text:"running"});
+                    node.status({fill: "green", shape: "dot", text: "running"});
                     timeout = setTimeout(function() {
                         node.status({});
                         if(stopped === false) {
                             var msg2 = RED.util.cloneMessage(msg);
-              msg2.payload = node.payloadval;
+                            msg2.payload = node.payloadval;
                             node.send([msg, msg2]);
                         }
                         timeout = null;
-                    },node.duration);
+                    }, node.duration);
                 }
             }
         });
@@ -83,5 +90,5 @@ module.exports = function(RED) {
             node.status({});
         });
     }
-    RED.nodes.registerType("stoptimer2",StopTimer2);
+    RED.nodes.registerType("stoptimer2", StopTimer2);
 }
